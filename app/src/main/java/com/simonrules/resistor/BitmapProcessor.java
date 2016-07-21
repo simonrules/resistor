@@ -37,9 +37,11 @@ public class BitmapProcessor {
     }
 
     public Bitmap getColourBitmap() {
-        Bitmap bitmap = Bitmap.createBitmap(mColour, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+        return Bitmap.createBitmap(mColour, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+    }
 
-        return bitmap;
+    public Bitmap getScaledColourBitmap(int width, int height) {
+        return Bitmap.createScaledBitmap(getColourBitmap(), width, height, false);
     }
 
     public Bitmap getLumaBitmap() {
@@ -52,9 +54,7 @@ public class BitmapProcessor {
             }
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(pixels, mWidth, mHeight, Bitmap.Config.ARGB_8888);
-
-        return bitmap;
+        return Bitmap.createBitmap(pixels, mWidth, mHeight, Bitmap.Config.ARGB_8888);
     }
 
     /*
@@ -290,7 +290,7 @@ public class BitmapProcessor {
         }
 
         // Draw bounding box in luma
-		for (j = mRect.left; j < mRect.right; j++) {
+		/*for (j = mRect.left; j < mRect.right; j++) {
 			mLuma[mRect.top * mWidth + j] = 255;
 			mLuma[mRect.bottom * mWidth + j] = 255;
 		}
@@ -298,63 +298,6 @@ public class BitmapProcessor {
 		for (i = mRect.top; i < mRect.bottom; i++) {
 			mLuma[i * mWidth + mRect.left] = 255;
 			mLuma[i * mWidth + mRect.right] = 255;
-		}
-    }
-
-    private void locateColourBands() {
-        int pixel, r, g, b;
-
-        // Reduce height of bounding box to 50%
-        int h = mRect.height() / 2;
-        int w = mRect.width();
-        mRect.top += (h / 2);
-        mRect.bottom -= (h / 2);
-
-        int[] colourAvg = new int[w];
-        int[] rAvg = new int[w];
-        int[] gAvg = new int[w];
-        int[] bAvg = new int[w];
-
-        // Generate strip of colours
-        int i = 0;
-        for (int j = mRect.left; j < mRect.right; j++) {
-            r = g = b = 0;
-            for (i = mRect.top; i < mRect.bottom; i++) {
-                pixel = mColour[i * mWidth + j];
-                r += Color.red(pixel);
-                g += Color.green(pixel);
-                b += Color.blue(pixel);
-            }
-            rAvg[j - mRect.left] = r / h;
-            gAvg[j - mRect.left] = g / h;
-            bAvg[j - mRect.left] = b / h;
-            colourAvg[j - mRect.left] = Color.rgb(r / h, g / h, b / h);
-        }
-
-        for (i = mRect.top; i < mRect.bottom; i++) {
-            for (int j = mRect.left; j < mRect.right; j++) {
-                mLuma[i * mWidth + j] = colourAvg[j - mRect.left];
-            }
-        }
-
-        int[] dr = new int[w];
-        int[] dg = new int[w];
-        int[] db = new int[w];
-
-        // Generate gradient maps for different colours
-        for (int j = 1; j < w-1; j++) {
-            dr[j] = Math.abs(-2 * rAvg[j-1] + 2 * rAvg[j+1]);
-            dg[j] = Math.abs(-2 * gAvg[j-1] + 2 * gAvg[j+1]);
-            db[j] = Math.abs(-2 * bAvg[j-1] + 2 * bAvg[j+1]);
-        }
-
-        for (int j = 1; j < w-1; j++) {
-            if ((dr[j] > T_LOW) && isGreatest(dr[j], dr[j-1], dr[j+1]))
-                mLuma[200 * mWidth + j + mRect.left] = Color.RED;
-            if ((dg[j] > T_LOW) && isGreatest(dg[j], dg[j-1], dg[j+1]))
-                mLuma[202 * mWidth + j + mRect.left] = Color.GREEN;
-            if ((db[j] > T_LOW) && isGreatest(db[j], db[j-1], db[j+1]))
-                mLuma[204 * mWidth + j + mRect.left] = Color.BLUE;
-        }
+		}*/
     }
 }

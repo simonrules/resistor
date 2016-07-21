@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mBitmapProcessor = new BitmapProcessor(BitmapFactory.decodeResource(getResources(),
-                R.drawable.resistor1));
+                R.drawable.resistor4));
 
         mImage = (ImageView) findViewById(R.id.image);
         mImage.setImageBitmap(mBitmapProcessor.getColourBitmap());
@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
                 // Update the image
                 mHandler.post(new Runnable() {
                     public void run() {
-                        mImage.setImageBitmap(mBitmapProcessor.getLumaBitmap());
+                        mImage.setImageBitmap(mBitmapProcessor.getScaledColourBitmap(mBitmapProcessor.getWidth() / 8, mBitmapProcessor.getHeight() / 8));
                         mImage.invalidate();
                     }
                 });

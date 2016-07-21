@@ -8,19 +8,44 @@
     <ImageView android:layout_height="wrap_content" android:layout_width="match_parent" android:src="@drawable/icon" android:id="@+id/image"
         android:layout_weight="0.74"></ImageView>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <View android:id="@+id/color_band0"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/yellow"
+            android:visibility="visible"/>
+        <View android:id="@+id/color_band1"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/violet"
+            android:visibility="visible"/>
+        <View android:id="@+id/color_band2"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/brown"
+            android:visibility="visible"/>
+        <View android:id="@+id/color_band3"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@color/gold"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/statusText"
+        android:text="Status" />
+
     <Button
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:text="Process"
         android:id="@+id/processButton"
         android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/statusText"
-        android:layout_gravity="center_horizontal"
-        android:text="Status" />
 
     <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/progressBar"></ProgressBar>
 </LinearLayout>
