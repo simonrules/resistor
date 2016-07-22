@@ -2,7 +2,9 @@ package com.simonrules.resistor;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,9 +16,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
     private BitmapProcessor mBitmapProcessor;
     private ImageView mImage;
-    private ProgressBar mProgress;
     private Handler mHandler = new Handler();
-    private int mProgressStatus;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,13 +30,15 @@ public class MainActivity extends Activity {
         mImage.setImageBitmap(mBitmapProcessor.getColourBitmap());
         mImage.invalidate();
 
-        mProgress = (ProgressBar) findViewById(R.id.progressBar);
-        mProgress.setMax(4 * mBitmapProcessor.getHeight());
-        mProgressStatus = 0;
-
         TextView statusText = (TextView) findViewById(R.id.statusText);
         statusText.setText("Image size: " + mBitmapProcessor.getWidth() + "x" +
                 mBitmapProcessor.getHeight());
+
+        Bitmap small = mBitmapProcessor.getScaledColourBitmap(mBitmapProcessor.getWidth() / 8, mBitmapProcessor.getHeight() / 8);
+        for (int x = 0; x < small.getWidth(); x++) {
+            ColourBand colourBand = new ColourBand(small.getPixel(x, 3));
+            System.out.println(colourBand.getColour());
+        }
 
         Button processButton = (Button)findViewById(R.id.processButton);
 
@@ -54,7 +56,7 @@ public class MainActivity extends Activity {
                 // Update the image
                 mHandler.post(new Runnable() {
                     public void run() {
-                        mImage.setImageBitmap(mBitmapProcessor.getScaledColourBitmap(mBitmapProcessor.getWidth() / 8, mBitmapProcessor.getHeight() / 8));
+                        mImage.setImageBitmap(mBitmapProcessor.getScaledColourBitmap(mBitmapProcessor.getWidth() / 16, mBitmapProcessor.getHeight() / 16));
                         mImage.invalidate();
                     }
                 });
