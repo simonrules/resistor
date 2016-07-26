@@ -46,8 +46,10 @@ public class ColourBand {
         double valueA = hsv[2];
         colour = null;
 
-        // Determine if this is a shade of grey and match on lightness if so,
-        // because the hue is meaningless.
+        /*
+         * Determine if this is a shade of grey and match on lightness if so,
+         * because the hue is meaningless.
+         */
         if (isShadeOfGrey(colourToMatch)) {
             double min = 1.0; // value max is 1.0
             for (Colour c: Colour.values()) {
@@ -88,18 +90,20 @@ public class ColourBand {
 
     /*
      * Returns true if the colour is close to a shade of grey (meaning the red, green
-     * and blue components differ by less than 5/256 from the average).
+     * and blue components differ by less than TOLERANCE/256 from the average).
      */
-    private boolean isShadeOfGrey(int colour) {
-        int r = Color.red(colour);
-        int g = Color.green(colour);
-        int b = Color.blue(colour);
+    private boolean isShadeOfGrey(int c) {
+        final int TOLERANCE = 5;
+
+        int r = Color.red(c);
+        int g = Color.green(c);
+        int b = Color.blue(c);
 
         int average = (r + g + b) / 3;
 
-        return ((Math.abs(r - average) < 5) &&
-                (Math.abs(g - average) < 5) &&
-                (Math.abs(b - average) < 5));
+        return ((Math.abs(r - average) < TOLERANCE) &&
+                (Math.abs(g - average) < TOLERANCE) &&
+                (Math.abs(b - average) < TOLERANCE));
     }
 
     /*
