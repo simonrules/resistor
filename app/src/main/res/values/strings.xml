@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Resistor</string>
+
+    <string name="image_dimensions">Image size: %1$s x %2$d pixels</string>
 </resources>
