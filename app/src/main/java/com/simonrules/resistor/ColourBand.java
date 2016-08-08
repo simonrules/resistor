@@ -36,21 +36,29 @@ public class ColourBand {
 
     private Colour colour;
 
+    ColourBand(int rgb) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(rgb, hsv);
+        matchColour(rgb, hsv);
+    }
+
     /*
      * Iterate through all Colour enums and determine the closest colour.
      */
-    ColourBand(int colourToMatch) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(colourToMatch, hsv);
+    ColourBand(float hsv[]) {
+        int rgb = Color.HSVToColor(hsv);
+        matchColour(rgb, hsv);
+    }
+
+    private void matchColour(int rgb, float hsv[]) {
         double hueA = hsv[0];
         double valueA = hsv[2];
-        colour = null;
 
         /*
          * Determine if this is a shade of grey and match on lightness if so,
          * because the hue is meaningless.
          */
-        if (isShadeOfGrey(colourToMatch)) {
+        if (isShadeOfGrey(rgb)) {
             double min = 1.0; // value max is 1.0
             for (Colour c: Colour.values()) {
                 // Skip if not a shade of grey
@@ -93,7 +101,7 @@ public class ColourBand {
      * and blue components differ by less than TOLERANCE/256 from the average).
      */
     private boolean isShadeOfGrey(int c) {
-        final int TOLERANCE = 5;
+        final int TOLERANCE = 8;
 
         int r = Color.red(c);
         int g = Color.green(c);

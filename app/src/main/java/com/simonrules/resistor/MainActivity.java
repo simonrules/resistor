@@ -24,6 +24,9 @@ public class MainActivity extends Activity {
         mBitmapProcessor = new BitmapProcessor(BitmapFactory.decodeResource(getResources(),
                 R.drawable.resistor4));
 
+        Resistor resistor = new Resistor(BitmapFactory.decodeResource(getResources(),
+                R.drawable.resistor1k));
+
         mImage = (ImageView) findViewById(R.id.image);
         mImage.setImageBitmap(mBitmapProcessor.getColourBitmap());
         mImage.invalidate();
@@ -34,10 +37,10 @@ public class MainActivity extends Activity {
         statusText.setText(text);
 
         Bitmap small = mBitmapProcessor.getScaledColourBitmap(mBitmapProcessor.getWidth() / 8, mBitmapProcessor.getHeight() / 8);
-        for (int x = 0; x < small.getWidth(); x++) {
+        /*for (int x = 0; x < small.getWidth(); x++) {
             ColourBand colourBand = new ColourBand(small.getPixel(x, 3));
             System.out.println(colourBand.getColour());
-        }
+        }*/
 
         Button processButton = (Button)findViewById(R.id.processButton);
 
